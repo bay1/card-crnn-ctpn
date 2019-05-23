@@ -51,7 +51,12 @@ def get_wh(box_coordinate):
     return width, height
     
 
-def text_detect(argv=None):
+# def text_detect(argv=None):
+def get_part_image(im_fn):
+    print('===============')
+    print(im_fn)
+    
+    # sess = text_detect()
     if os.path.exists(FLAGS.output_path):
         shutil.rmtree(FLAGS.output_path)
     os.makedirs(FLAGS.output_path)
@@ -74,72 +79,68 @@ def text_detect(argv=None):
             print('Restore from {}'.format(model_path))
             saver.restore(sess, model_path)
             
-            return sess
+            # return sess
 
-def get_part_image(im_fn):
-    print('===============')
-    print(im_fn)
-    
-    sess = text_detect()
 
-    start = time.time()
-    try:
-        im = cv2.imread(im_fn)[:, :, ::-1]
-    except:
-        print("Error reading image {}!".format(im_fn))
 
-    img, (rh, rw) = resize_image(im)
-    h, w, c = img.shape
-    im_info = np.array([h, w, c]).reshape([1, 3])
-    bbox_pred_val, cls_prob_val = sess.run([bbox_pred, cls_prob],
-                                            feed_dict={input_image: [img],
-                                                        input_im_info: im_info})
+            start = time.time()
+            try:
+                im = cv2.imread(im_fn)[:, :, ::-1]
+            except:
+                print("Error reading image {}!".format(im_fn))
 
-    textsegs, _ = proposal_layer(cls_prob_val, bbox_pred_val, im_info)
-    scores = textsegs[:, 0]
-    textsegs = textsegs[:, 1:5]
+            img, (rh, rw) = resize_image(im)
+            h, w, c = img.shape
+            im_info = np.array([h, w, c]).reshape([1, 3])
+            bbox_pred_val, cls_prob_val = sess.run([bbox_pred, cls_prob],
+                                                    feed_dict={input_image: [img],
+                                                                input_im_info: im_info})
 
-    textdetector = TextDetector(DETECT_MODE='H')
-    boxes = textdetector.detect(textsegs, scores[:, np.newaxis], img.shape[:2])
-    
+            textsegs, _ = proposal_layer(cls_prob_val, bbox_pred_val, im_info)
+            scores = textsegs[:, 0]
+            textsegs = textsegs[:, 1:5]
 
-    cost_time = (time.time() - start)
-    print("cost time: {:.2f}s".format(cost_time))
-    
-    
-    img_copy = img.copy()
+            textdetector = TextDetector(DETECT_MODE='H')
+            boxes = textdetector.detect(textsegs, scores[:, np.newaxis], img.shape[:2])
+            
 
-    boxes_array = np.array(boxes, dtype=np.int)
-    text_recs = np.zeros((len(boxes), 8), np.int)
+            cost_time = (time.time() - start)
+            print("cost time: {:.2f}s".format(cost_time))
+            
+            
+            img_copy = img.copy()
 
-    widths = {}
-    for i, box in enumerate(boxes_array):
-        width, height = get_wh(box[:8].tolist()) # 计算宽高比
-        widths[width] = [i, height]
+            boxes_array = np.array(boxes, dtype=np.int)
+            text_recs = np.zeros((len(boxes), 8), np.int)
 
-    width_max = max(widths)
-    width_max_value = widths[width_max]
-    partImg = img.copy()
-    for i, box in enumerate(boxes_array):
+            widths = {}
+            for i, box in enumerate(boxes_array):
+                width, height = get_wh(box[:8].tolist()) # 计算宽高比
+                widths[width] = [i, height]
 
-        color=(0, 255, 0)
-        
-        if i == width_max_value[0] and width_max_value[1] > 20:
-            color = (255 ,0,0)
-            partImg = img[box[1]-5:box[5]+5, box[0]-5:box[2]+5][:,:,0]
+            width_max = max(widths)
+            width_max_value = widths[width_max]
+            partImg = img.copy()
+            for i, box in enumerate(boxes_array):
 
-        cv2.polylines(img_copy, [box[:8].astype(np.int32).reshape((-1, 1, 2))], True, color=color,
-                        thickness=2)
+                color=(0, 255, 0)
+                
+                if i == width_max_value[0] and width_max_value[1] > 20:
+                    color = (255 ,0,0)
+                    partImg = img[box[1]-5:box[5]+5, box[0]-5:box[2]+5][:,:,0]
 
-    img_copy = cv2.resize(img_copy, None, None, fx=1.0 / rh, fy=1.0 / rw, interpolation=cv2.INTER_LINEAR)
-    cv2.imwrite(os.path.join(FLAGS.output_path, os.path.basename(im_fn)), img_copy[:, :, ::-1])
-    cv2.imwrite(os.path.join(FLAGS.output_path, 'number_'+os.path.basename(im_fn)), partImg)
+                cv2.polylines(img_copy, [box[:8].astype(np.int32).reshape((-1, 1, 2))], True, color=color,
+                                thickness=2)
 
-    with open(os.path.join(FLAGS.output_path, os.path.splitext(os.path.basename(im_fn))[0]) + ".txt",
-                "w") as f:
-        for i, box in enumerate(boxes_array):
-            line = ",".join(str(box[k]) for k in range(8))
-            line += "," + str(scores[i]) + "\r\n"
-            f.writelines(line)
+            img_copy = cv2.resize(img_copy, None, None, fx=1.0 / rh, fy=1.0 / rw, interpolation=cv2.INTER_LINEAR)
+            cv2.imwrite(os.path.join(FLAGS.output_path, os.path.basename(im_fn)), img_copy[:, :, ::-1])
+            cv2.imwrite(os.path.join(FLAGS.output_path, 'number_'+os.path.basename(im_fn)), partImg)
 
-    return partImg
+            with open(os.path.join(FLAGS.output_path, os.path.splitext(os.path.basename(im_fn))[0]) + ".txt",
+                        "w") as f:
+                for i, box in enumerate(boxes_array):
+                    line = ",".join(str(box[k]) for k in range(8))
+                    line += "," + str(scores[i]) + "\r\n"
+                    f.writelines(line)
+
+            return partImg

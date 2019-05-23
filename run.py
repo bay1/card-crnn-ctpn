@@ -38,18 +38,6 @@ def crnnRec(partImg):
     test_image(image, crnn_model_path)
 
 
-def model(im_fn):
-    """
-    @@param:img,
-    @@param:model,选择的ocr模型，支持keras\pytorch版本
-    """
-    # 进行图像中的文字区域的识别
-    partImg=get_part_image(im_fn)
-    
-
-    crnnRec(partImg)
-
-
 if __name__ == '__main__':
     '''
     result-识别结果
@@ -58,4 +46,6 @@ if __name__ == '__main__':
     test_data_path = 'data/test_images'
     im_fn_list = get_images(test_data_path)
     for im_fn in im_fn_list:
-        model(im_fn)
+        # 进行图像中的文字区域的识别
+        partImg=get_part_image(im_fn)
+        crnnRec(partImg)

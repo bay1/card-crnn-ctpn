@@ -107,3 +107,7 @@ venv.bak/
 checkpoints_mlt/
 crnn_bak/
 crnn/expr/
+train/save_model/
+crnn/trained_models/
+ctpn/data/*.ckpt
+.idea/
