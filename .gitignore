@@ -102,3 +102,8 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+.history/
+.vscode/
+checkpoints_mlt/
+crnn_bak/
+crnn/expr/
