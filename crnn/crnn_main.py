@@ -12,14 +12,13 @@ import os
 import utils
 import dataset
 import models.crnn as crnn
-import re
 import params
 
 
 def init_args():
     args = argparse.ArgumentParser()
-    args.add_argument('--trainroot', help='path to dataset', default='./to_lmdb/lmdb')
-    args.add_argument('--valroot', help='path to dataset', default='./to_lmdb/lmdb')
+    args.add_argument('--trainroot', help='path to dataset', default='crnn/to_lmdb/lmdb')
+    args.add_argument('--valroot', help='path to dataset', default='crnn/to_lmdb/lmdb')
     args.add_argument('--cuda', action='store_true', help='enables cuda', default=False)
 
     return args.parse_args()
@@ -101,7 +100,7 @@ def trainBatch(crnn, criterion, optimizer, train_iter):
     return cost
 
 
-def training(crnn,train_loader,criterion,optimizer):
+def training(crnn, train_loader, criterion, optimizer):
     for total_steps in range(params.niter):
         train_iter = iter(train_loader)
         i = 0
@@ -131,8 +130,8 @@ if __name__ == '__main__':
     cudnn.benchmark = True
 
     # store model path
-    if not os.path.exists('./expr'):
-        os.mkdir('./expr')
+    if not os.path.exists('crnn/expr'):
+        os.mkdir('crnn/expr')
 
     # read train set
     train_dataset = dataset.lmdbDataset(root=args.trainroot)
@@ -148,7 +147,6 @@ if __name__ == '__main__':
         shuffle=True, sampler=sampler,
         num_workers=int(params.workers),
         collate_fn=dataset.alignCollate(imgH=params.imgH, imgW=params.imgW, keep_ratio=params.keep_ratio))
-
 
     # read test set
     # images will be resize to 32*160
@@ -194,4 +192,4 @@ if __name__ == '__main__':
     else:
         optimizer = optim.RMSprop(crnn.parameters(), lr=params.lr)
 
-    training(crnn,train_loader,criterion,optimizer)
+    training(crnn, train_loader, criterion, optimizer)

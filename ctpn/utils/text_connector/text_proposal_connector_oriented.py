@@ -1,7 +1,7 @@
 # coding:utf-8
 import numpy as np
 
-from ctpn.utils.text_connector.text_proposal_graph_builder import TextProposalGraphBuilder
+from utils.text_connector.text_proposal_graph_builder import TextProposalGraphBuilder
 
 
 class TextProposalConnector:

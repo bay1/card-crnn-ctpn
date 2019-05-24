@@ -111,3 +111,4 @@ train/save_model/
 crnn/trained_models/
 ctpn/data/*.ckpt
 .idea/
+*.so
