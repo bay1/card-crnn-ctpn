@@ -6,6 +6,8 @@ https://github.com/eragonruan/text-detection-ctpn
 
 ## INSTALL
 
+Ubuntu18/16.04 + CUDA 8.0.61 + GeForce GTX 960M + NVIDIA Driver 430.14 + Python3.6 + Tensorflow-gpu
+
 ## ctpn
 
 ```bash
@@ -55,6 +57,8 @@ valroot folder: crnn/to_lmdb/lmdb
 train models result folder: crnn/expr
 
 change params: crnn/params.py
+
+if you load_state_dict, change crnn/params.py crnn='your pth path'
 
 ```bash
 cd crnn
