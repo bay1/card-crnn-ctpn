@@ -53,3 +53,4 @@ traitlets==4.3.2
 # warpctc-pytorch==0.1
 wcwidth==0.1.7
 Werkzeug==0.15.4
+Flask==1.0.3
