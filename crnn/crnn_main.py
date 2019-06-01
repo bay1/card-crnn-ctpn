@@ -141,7 +141,6 @@ if __name__ == '__main__':
     else:
         sampler = None
 
-    # images will be resize to 32*160
     train_loader = torch.utils.data.DataLoader(
         train_dataset, batch_size=params.batchSize,
         shuffle=True, sampler=sampler,
@@ -149,9 +148,8 @@ if __name__ == '__main__':
         collate_fn=dataset.alignCollate(imgH=params.imgH, imgW=params.imgW, keep_ratio=params.keep_ratio))
 
     # read test set
-    # images will be resize to 32*160
     test_dataset = dataset.lmdbDataset(
-        root=args.valroot, transform=dataset.resizeNormalize((160, 32)))
+        root=args.valroot, transform=dataset.resizeNormalize((params.imgW, params.imgH)))
 
     nclass = len(params.alphabet) + 1
     nc = 1
@@ -174,7 +172,15 @@ if __name__ == '__main__':
     crnn.apply(weights_init)
     if params.crnn != '':
         print('loading pretrained model from %s' % params.crnn)
-        crnn.load_state_dict(torch.load(params.crnn))
+
+        preWeightDict = torch.load(params.crnn,map_location=lambda storage, loc: storage)##加入项目训练的权重
+        modelWeightDict = crnn.state_dict()
+        for k, v in preWeightDict.items():
+            name = k.replace('module.','') # remove `module.`
+            if  'rnn.1.embedding' not in name:##不加载最后一层权重
+                 modelWeightDict[name] = v
+       
+        crnn.load_state_dict(modelWeightDict)
 
     image = Variable(image)
     text = Variable(text)

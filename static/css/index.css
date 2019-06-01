@@ -1,0 +1,73 @@
+table.gridtable {
+    font-family: verdana, arial, sans-serif;
+    font-size: 10px;
+    color: #333333;
+    border-width: 1px;
+    border-color: #666666;
+    border-collapse: collapse;
+}
+
+table.gridtable th {
+    border-width: 1px;
+    padding: 10px;
+    border-style: solid;
+    border-color: #666666;
+    background-color: #dedede;
+}
+
+table.gridtable td {
+    border-width: 1px;
+    padding: 10px;
+    border-style: solid;
+    border-color: #666666;
+    background-color: #ffffff;
+}
+
+.loading {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 1002;
+}
+
+.class_div {
+    display: inline
+}
+
+.image-input-container {
+    position: absolute;
+    left: 40%;
+    top: 10%;
+}
+
+.canvas-container img,
+.canvas-container canvas {
+    width: 1600;
+    height: 1000;
+    position: absolute;
+    left: 35%;
+    top: 45%;
+    transform: translate(-50%, -50%) scale(0.5);
+    z-index: 2;
+}
+
+#loadingGif {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(0.5);
+    z-index: 3;
+    display: none;
+}
+
+.result {
+    position: absolute;
+    left: 65%;
+    top: 30%;
+}
+
+/* .result .table {
+    height: 500px;
+    width: 300px;
+} */

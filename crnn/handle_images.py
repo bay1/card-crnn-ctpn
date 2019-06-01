@@ -1,6 +1,8 @@
 from PIL import Image
 import re
 import os
+import dataset
+import params
 
 
 def OCR_lmj(img_path, file, f):
@@ -18,7 +20,8 @@ def OCR_lmj(img_path, file, f):
     f.writelines(line)
 
     # 保存图片
-    imgry.save('crnn/to_lmdb/train_images/' + new_file)
+    imgry = imgry.resize((params.imgW, params.imgH))
+    imgry.save('to_lmdb/train_images/' + new_file)
 
     return new_filename
 
@@ -26,9 +29,9 @@ def OCR_lmj(img_path, file, f):
 def main():
     # 识别指定文件目录下的图片
     # 图片存放目录figures
-    dir = 'data/images/'
+    dir = '../data/images/'
 
-    with open("crnn/to_lmdb/train.txt", "w") as f:
+    with open("to_lmdb/train.txt", "w") as f:
         # 遍历figures下的png,jpg文件
         for file in os.listdir(dir):
             if file.endswith('.png') or file.endswith('.jpg'):

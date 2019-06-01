@@ -4,6 +4,8 @@ https://github.com/xiaofengShi/CHINESE-OCR
 
 https://github.com/eragonruan/text-detection-ctpn
 
+https://github.com/chineseocr/chineseocr
+
 ## INSTALL
 
 Ubuntu18/16.04 + CUDA 8.0.61 + GeForce GTX 960M + NVIDIA Driver 430.14 + Python3.6 + Tensorflow-gpu
@@ -28,6 +30,7 @@ ctpn_result_folder: data/res # number_x.jpg or .jpeg
 ## crnn
 
 ```bash
+cd crnn
 python handle_images.py
 ```
 handle images floder: data/images/
@@ -39,7 +42,7 @@ handle images result folder: crnn/to_lmdb/train_images
 ```bash
 cd crnn/to_lmdb
 
-python tolmdb_py3.py # python to_lmdb_py2.py 
+python to_lmdb_py3.py # python to_lmdb_py2.py 
 ```
 
 lmdb folder: crnn/train/lmdb
@@ -71,3 +74,12 @@ crnn model path: crnn/trained_models/crnn_Rec_done.pth
 images_path: data/res
 
 
+## web
+
+to run the web
+
+```python
+python run.py
+```
+
+url: http://127.0.0.1:5000

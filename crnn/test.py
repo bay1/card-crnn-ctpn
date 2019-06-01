@@ -12,6 +12,7 @@ import dataset
 from PIL import Image
 import models.crnn as crnn
 import alphabets
+from collections import OrderedDict
 
 str1 = alphabets.alphabet
 
@@ -40,13 +41,11 @@ def get_images(images_path):
     return files
 
 
-# crnn文本信息识别
 def crnn_recognition(cropped_image, model):
     converter = utils.strLabelConverter(alphabet)
 
     image = cropped_image.convert('L')
 
-    ##
     w = int(image.size[0] / (280 * 1.0 / 160))
     transformer = dataset.resizeNormalize((w, 32))
     image = transformer(image)
@@ -54,6 +53,7 @@ def crnn_recognition(cropped_image, model):
         image = image.cuda()
     image = image.view(1, *image.size())
     image = Variable(image)
+    
 
     model.eval()
     preds = model(image)
@@ -73,8 +73,14 @@ if __name__ == '__main__':
     if torch.cuda.is_available():
         model = model.cuda()
     print('loading pretrained model from {0}'.format(crnn_model_path))
-    # 导入已经训练好的crnn模型
-    model.load_state_dict(torch.load(crnn_model_path))
+
+    trainWeights = torch.load(crnn_model_path,map_location=lambda storage, loc: storage)
+    modelWeights = OrderedDict()
+    for k, v in trainWeights.items():
+        name = k.replace('module.','') # remove `module.`
+        modelWeights[name] = v
+
+    model.load_state_dict(modelWeights)
 
     im_fn_list = get_images(opt.images_path)
     for im_fn in im_fn_list:

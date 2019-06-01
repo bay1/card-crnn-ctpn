@@ -25,7 +25,7 @@ def init_args():
                       '--save_dir',
                       type=str
                       , help='The generated mdb file save dir',
-                      default='train')
+                      default='lmdb')
     args.add_argument('-m',
                       '--map_size',
                       help='map size of lmdb',
