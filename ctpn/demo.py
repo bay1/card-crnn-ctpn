@@ -67,7 +67,7 @@ def resize_image(img):
     return re_im, (new_h / img_size[0], new_w / img_size[1])
 
 
-def main(argv=None):
+def main():
     if os.path.exists(FLAGS.output_path):
         shutil.rmtree(FLAGS.output_path)
     os.makedirs(FLAGS.output_path)
@@ -125,7 +125,6 @@ def main(argv=None):
                 img_copy = img.copy()
 
                 boxes_array = np.array(boxes, dtype=np.int)
-                text_recs = np.zeros((len(boxes), 8), np.int)
 
                 widths = {}
                 for i, box in enumerate(boxes_array):

@@ -1,5 +1,5 @@
-import numpy as np
-import sys, os
+import sys
+import os
 import time
 
 sys.path.append(os.getcwd())
@@ -53,7 +53,6 @@ def crnn_recognition(cropped_image, model):
         image = image.cuda()
     image = image.view(1, *image.size())
     image = Variable(image)
-    
 
     model.eval()
     preds = model(image)
@@ -74,10 +73,10 @@ if __name__ == '__main__':
         model = model.cuda()
     print('loading pretrained model from {0}'.format(crnn_model_path))
 
-    trainWeights = torch.load(crnn_model_path,map_location=lambda storage, loc: storage)
+    trainWeights = torch.load(crnn_model_path, map_location=lambda storage, loc: storage)
     modelWeights = OrderedDict()
     for k, v in trainWeights.items():
-        name = k.replace('module.','') # remove `module.`
+        name = k.replace('module.', '')  # remove `module.`
         modelWeights[name] = v
 
     model.load_state_dict(modelWeights)

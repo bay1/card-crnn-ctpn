@@ -173,13 +173,13 @@ if __name__ == '__main__':
     if params.crnn != '':
         print('loading pretrained model from %s' % params.crnn)
 
-        preWeightDict = torch.load(params.crnn,map_location=lambda storage, loc: storage)##加入项目训练的权重
+        preWeightDict = torch.load(params.crnn, map_location=lambda storage, loc: storage)  ##加入项目训练的权重
         modelWeightDict = crnn.state_dict()
         for k, v in preWeightDict.items():
-            name = k.replace('module.','') # remove `module.`
-            if  'rnn.1.embedding' not in name:##不加载最后一层权重
-                 modelWeightDict[name] = v
-       
+            name = k.replace('module.', '')  # remove `module.`
+            if 'rnn.1.embedding' not in name:  ##不加载最后一层权重
+                modelWeightDict[name] = v
+
         crnn.load_state_dict(modelWeightDict)
 
     image = Variable(image)

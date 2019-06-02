@@ -2,10 +2,7 @@
 import os
 import lmdb  # install lmdb by "pip install lmdb"
 import cv2
-import re
-from PIL import Image
 import numpy as np
-import imghdr
 import argparse
 
 
@@ -57,7 +54,8 @@ def writeCache(env, cache):
                 k = k.encode()
             if type(v) == str:
                 v = v.encode()
-            txn.put(k,v)
+            txn.put(k, v)
+
 
 def createDataset(outputPath, imagePathList, labelList, map_size, lexiconList=None, checkValid=True):
     """

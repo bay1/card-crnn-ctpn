@@ -4,7 +4,6 @@
 import torch
 import torch.nn as nn
 from torch.autograd import Variable
-import collections
 
 
 class strLabelConverter(object):
@@ -28,9 +27,10 @@ class strLabelConverter(object):
         for i, char in enumerate(alphabet):
             # NOTE: 0 is reserved for 'blank' required by wrap_ctc
             self.dict[char] = i + 1
-        #print(self.dict)
-        #print(self.dict)
-       	#print(self.dict)
+        # print(self.dict)
+        # print(self.dict)
+
+    # print(self.dict)
     def encode(self, text):
         """Support batch or single str.
 
@@ -54,8 +54,8 @@ class strLabelConverter(object):
         #         result.append(index)
         # text = result
         # print(list_1)
-        #print(text[0])
-        #print(text)
+        # print(text[0])
+        # print(text)
         # if isinstance(text, str):
         #     # for char in text:
         #     #     char = char.encode()
@@ -75,16 +75,16 @@ class strLabelConverter(object):
         #     text, _ = self.encode(text)
         length = []
         result = []
-        for item in text:            
-            item = item.decode('utf-8','strict')
+        for item in text:
+            item = item.decode('utf-8', 'strict')
             length.append(len(item))
-            #print(len(item))
-            #print('11')
-            #print(item)
+            # print(len(item))
+            # print('11')
+            # print(item)
             for char in item:
-                #print(char)
-                #char = char.lower()
-                #print(char)
+                # print(char)
+                # char = char.lower()
+                # print(char)
                 # try:
                 #     index = self.dict[char]
                 # except Exception as e:
@@ -97,10 +97,9 @@ class strLabelConverter(object):
                 #     pass
                 index = self.dict[char]
                 result.append(index)
-                
 
         text = result
-        #print(text,length)
+        # print(text,length)
         return (torch.IntTensor(text), torch.IntTensor(length))
 
     def decode(self, t, length, raw=False):
@@ -118,7 +117,8 @@ class strLabelConverter(object):
         """
         if length.numel() == 1:
             length = length[0]
-            assert t.numel() == length, "text with length: {} does not match declared length: {}".format(t.numel(), length)
+            assert t.numel() == length, "text with length: {} does not match declared length: {}".format(t.numel(),
+                                                                                                         length)
             if raw:
                 return ''.join([self.alphabet[i - 1] for i in t])
             else:
@@ -129,7 +129,8 @@ class strLabelConverter(object):
                 return ''.join(char_list)
         else:
             # batch mode
-            assert t.numel() == length.sum(), "texts with length: {} does not match declared length: {}".format(t.numel(), length.sum())
+            assert t.numel() == length.sum(), "texts with length: {} does not match declared length: {}".format(
+                t.numel(), length.sum())
             texts = []
             index = 0
             for i in range(length.numel()):
@@ -184,7 +185,7 @@ def oneHot(v, v_length, nc):
 
 def loadData(v, data):
     v.data.resize_(data.size()).copy_(data)
-    #print(v.size())
+    # print(v.size())
 
 
 def prettyPrint(v):

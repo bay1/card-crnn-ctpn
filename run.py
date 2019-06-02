@@ -26,7 +26,7 @@ def handle_img(image):
 
     timeTake = time.time()
     # path
-    timeTake = time.time()-timeTake
+    timeTake = time.time() - timeTake
     res = [{'text': 'text', 'name': '0', 'box': [0, 0, W, 0, W, H, 0, H]}]
 
     os.remove(path)
