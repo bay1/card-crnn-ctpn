@@ -1,8 +1,8 @@
 import tensorflow as tf
 from tensorflow.contrib import slim
 
-from nets import vgg
-from utils.rpn_msr.anchor_target_layer import anchor_target_layer as anchor_target_layer_py
+from ctpn.nets import vgg
+from ctpn.utils.rpn_msr.anchor_target_layer import anchor_target_layer as anchor_target_layer_py
 
 
 def mean_image_subtraction(images, means=[123.68, 116.78, 103.94]):

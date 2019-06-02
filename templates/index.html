@@ -11,53 +11,45 @@
 </head>
 
 <body>
-<div class="image-input-container">
-    <input type="file" id='imageButton' class="image-local-input"
-           accept="image/png, image/bmp, image/jpg, image/jpeg"
-           onchange="FunimgPreview('imageButton','Preview','myCanvas')">
-</div>
-
-
-<div>
-    <div class="canvas-container">
-        <img id='Preview'>
-        <canvas id="myCanvas"/>
+    <div class="image-input-container">
+        <input type="file" id='imageButton' class="image-local-input"
+            accept="image/png, image/bmp, image/jpg, image/jpeg" onchange="FunimgPreview('imageButton','Preview')">
     </div>
-    <div class="result">
-        <div class="json">
-            <div class="json-request-title" id="billmodelname"></div>
-            <div id="billNameList"></div>
+
+
+    <div>
+        <div class="canvas-container">
+            <img id='Preview'>
+        </div>
+        <div class="result">
             <div id="mytable"></div>
         </div>
     </div>
-</div>
 
-<img id='loadingGif' src="static/img/loading.gif">
+    <img id='loadingGif' src="static/img/loading.gif">
 
-<script type="text/javascript" src="static/js/jquery.js"></script>
-<script type="text/javascript" src="static/js/jquery.form.js"></script>
-<script type="text/javascript" src="static/js/helps.js"></script>
-<script type="text/javascript">
-    //变量初始化，存储需要请求的数据
-    imgJson = {
-        "imgString": "",
-        "num": 0,
-        "url": "",
-        "result": "",
-        "timeTake": 0.0,
-        'ocrFlag': false
-    };
+    <script type="text/javascript" src="static/js/jquery.js"></script>
+    <script type="text/javascript" src="static/js/jquery.form.js"></script>
+    <script type="text/javascript" src="static/js/helps.js"></script>
+    <script type="text/javascript">
+        //变量初始化，存储需要请求的数据
+        imgJson = {
+            "imgString": "",
+            "num": 0,
+            "url": "",
+            "result": "",
+            "timeTake": 0.0,
+            'ocrFlag': false
+        };
 
-    imgBoxes = [];
-    imgRate = 1;
+        imgBoxes = [];
+        imgRate = 1;
 
-    //点击文件,自动提交文件，进行识别
-    jQuery('#imageButton').on('change', function () {
-    });
+        //点击文件,自动提交文件，进行识别
+        jQuery('#imageButton').on('change', function () {
+        });
 
-    setInterval(cycle, 700); //动画显示box
-
-</script>
+    </script>
 </body>
 
 </html>

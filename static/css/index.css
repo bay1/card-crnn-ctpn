@@ -1,28 +1,3 @@
-table.gridtable {
-    font-family: verdana, arial, sans-serif;
-    font-size: 10px;
-    color: #333333;
-    border-width: 1px;
-    border-color: #666666;
-    border-collapse: collapse;
-}
-
-table.gridtable th {
-    border-width: 1px;
-    padding: 10px;
-    border-style: solid;
-    border-color: #666666;
-    background-color: #dedede;
-}
-
-table.gridtable td {
-    border-width: 1px;
-    padding: 10px;
-    border-style: solid;
-    border-color: #666666;
-    background-color: #ffffff;
-}
-
 .loading {
     display: none;
     position: absolute;
@@ -41,8 +16,7 @@ table.gridtable td {
     top: 10%;
 }
 
-.canvas-container img,
-.canvas-container canvas {
+.canvas-container img {
     width: 1600;
     height: 1000;
     position: absolute;
@@ -66,8 +40,3 @@ table.gridtable td {
     left: 65%;
     top: 30%;
 }
-
-/* .result .table {
-    height: 500px;
-    width: 300px;
-} */
