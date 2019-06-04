@@ -10,15 +10,16 @@ https://github.com/chineseocr/chineseocr
 
 Ubuntu18/16.04 + CUDA 8.0.61 + GeForce GTX 960M + NVIDIA Driver 430.14 + Python3.6 + Tensorflow-gpu
 
+
+- torchvision==0.2.2.post3 install after torch done
+- install warpctc-pytorch==0.1 by https://github.com/SeanNaren/warp-ctc
+
 ## ctpn
 
 ```bash
 cd ctpn/utils/bbox
 chmod +x make.sh
 ./make.sh
-
-python ctpn/demo.py
-
 ```
 
 test_image_folder: data/test_images
@@ -63,12 +64,6 @@ change params: crnn/params.py
 
 if you load_state_dict, change crnn/params.py crnn='your pth path'
 
-```bash
-cd crnn
-
-python test.py
-```
-
 crnn model path: crnn/trained_models/crnn_Rec_done.pth
 
 images_path: data/res
@@ -83,3 +78,9 @@ python run.py
 ```
 
 url: http://127.0.0.1:5000
+
+![index](static/img/index.png)
+
+![uploading](static/img/uploading.png)
+
+![result](static/img/result.png)
