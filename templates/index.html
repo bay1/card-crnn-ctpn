@@ -6,50 +6,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
     <title>银行卡识别</title>
-    <link rel="stylesheet" href="static/css/checkbox.css">
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="static/css/index.css">
 </head>
 
 <body>
-    <div class="image-input-container">
-        <input type="file" id='imageButton' class="image-local-input"
-            accept="image/png, image/bmp, image/jpg, image/jpeg" onchange="FunimgPreview('imageButton','Preview')">
+<div class="container">
+    <div class="header clearfix">
+        <nav>
+            <ul class="nav nav-pills pull-right">
+                <li role="presentation">
+                    <input type="file" id="imageButton"
+                           accept="image/png, image/bmp, image/jpg, image/jpeg"
+                           onchange="FunimgPreview('imageButton','Preview')">
+                    <label for="imageButton" class="btn btn-success">
+                        <span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span>
+                        <span>选择图片</span>
+                    </label>
+                </li>
+            </ul>
+        </nav>
+        <h3 class="text-muted">银行卡号识别系统</h3>
+    </div>
+    <div class="center-block">
+        <img id='Preview'>
+    </div>
+    <div class="alert alert-success">
+        <p class="text-center show-result">
+            请点击右上角按钮上传图片
+        </p>
     </div>
 
+    <footer class="footer">
+        <p>&copy; 2019</p>
+    </footer>
 
-    <div>
-        <div class="canvas-container">
-            <img id='Preview'>
-        </div>
-        <div class="result">
-            <div id="mytable"></div>
-        </div>
-    </div>
+</div>
 
-    <img id='loadingGif' src="static/img/loading.gif">
+<img id='loadingGif' src="static/img/loading.gif">
 
-    <script type="text/javascript" src="static/js/jquery.js"></script>
-    <script type="text/javascript" src="static/js/jquery.form.js"></script>
-    <script type="text/javascript" src="static/js/helps.js"></script>
-    <script type="text/javascript">
-        //变量初始化，存储需要请求的数据
-        imgJson = {
-            "imgString": "",
-            "num": 0,
-            "url": "",
-            "result": "",
-            "timeTake": 0.0,
-            'ocrFlag': false
-        };
+<script type="text/javascript" src="static/js/jquery.js"></script>
+<script type="text/javascript" src="static/js/jquery.form.js"></script>
+<script type="text/javascript" src="static/js/helps.js"></script>
+<script type="text/javascript">
+    //变量初始化，存储需要请求的数据
+    imgJson = {
+        "imgString": "",
+        "num": 0,
+        "url": "",
+        "result": "",
+        "timeTake": 0.0,
+    };
 
-        imgBoxes = [];
-        imgRate = 1;
-
-        //点击文件,自动提交文件，进行识别
-        jQuery('#imageButton').on('change', function () {
-        });
-
-    </script>
+    //点击文件,自动提交文件，进行识别
+    jQuery('#imageButton').on('change', function () {
+    });
+</script>
 </body>
 
 </html>

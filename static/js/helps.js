@@ -1,10 +1,8 @@
 function postImg() {
     //执行post请求，识别图片
-    jQuery("#billmodeltable").remove(); //清空界面识别结果
     if (imgJson['num'] == 0) {
         loadingGif('loadingGif');
         imgJson['num'] = 1; //防止重复提交
-        imgJson['ocrFlag'] = true;
         jQuery.ajax({
             type: "post",
             url: '/',
@@ -16,7 +14,6 @@ function postImg() {
                 imgJson['num'] = 0; //防止重复提交
                 imgJson["result"] = res;
                 getChildDetail();
-                imgJson['ocrFlag'] = false;
             }
         });
     }
@@ -74,13 +71,12 @@ function FunimgPreview(avatarSlect, avatarPreview) {
             image.src = this.result;
 
             postImg(); //提交POST请求
-        }; //fr.onload
+        };
 
-    }) //jQuery("#"+avatarSlect)
+    })
 }
 
 function getChildDetail() {
-    jQuery("#billmodeltable").remove();
     result = imgJson["result"];
     console.log(result);
     jQuery("#Preview").attr('src', 'data:image/png;base64,' + result['result_image']);
@@ -89,8 +85,8 @@ function getChildDetail() {
 
 //show数据
 function showResult(text, timeTake) {
-    jQuery("#mytable").empty();
-    imgBoxes = [];
-    var p = "<h3>耗时:" + timeTake + "秒</h3>"+"<h3>识别结果为: " + text + "</h3>";
-    jQuery("#mytable").append(p);
+    jQuery(".show-result").empty();
+    var p = "<span class=\"glyphicon glyphicon-time\" aria-hidden=\"true\"></span> <span class=\"text-warning\">" + timeTake + "s </span><br/>" +
+        " <span class=\"glyphicon glyphicon-circle-arrow-right\" aria-hidden=\"true\"></span> <span class=\"text-warning\">" + text + "</span>";
+    jQuery(".show-result").append(p);
 }

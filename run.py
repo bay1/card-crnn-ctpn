@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import os
-import cv2
 import time
 import uuid
 import base64
@@ -19,14 +18,12 @@ app.debug = True
 
 
 def handle_img(image):
-    imgString = image.encode().split(b';base64,')[-1]
-    imgString = base64.b64decode(imgString)
+    _img = image.encode().split(b';base64,')[-1]
+    _img = base64.b64decode(_img)
     jobid = uuid.uuid1().__str__()
     path = 'data/test_images/{}.jpg'.format(jobid)
     with open(path, 'wb') as f:
-        f.write(imgString)
-    img = cv2.imread(path)
-    H, W = img.shape[:2]
+        f.write(_img)
 
     timeTake = time.time()
     main()
@@ -35,7 +32,7 @@ def handle_img(image):
 
     res_image = 'data/res/{}.jpg'.format(jobid)
     try:
-        # read an image
+        # read image
         image = Image.open(res_image)
     except:
         print("Error reading image")

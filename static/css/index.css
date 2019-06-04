@@ -1,29 +1,51 @@
-.loading {
-    display: none;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    z-index: 1002;
+/* Space out content a bit */
+body {
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
-.class_div {
-    display: inline
+/* Everything but the jumbotron gets side spacing for mobile first views */
+.header,
+.show-result,
+.footer {
+    padding-right: 15px;
+    padding-left: 15px;
 }
 
-.image-input-container {
-    position: absolute;
-    left: 40%;
-    top: 10%;
+/* Custom page header */
+.header {
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e5e5e5;
 }
 
-.canvas-container img {
-    width: 1600;
-    height: 1000;
-    position: absolute;
-    left: 35%;
-    top: 45%;
-    transform: translate(-50%, -50%) scale(0.5);
-    z-index: 2;
+/* Make the masthead heading the same height as the navigation */
+.header h3 {
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 40px;
+}
+
+/* Custom page footer */
+.footer {
+    padding-top: 19px;
+    color: #777;
+    border-top: 1px solid #e5e5e5;
+}
+
+/* Customize container */
+@media (min-width: 768px) {
+    .container {
+        max-width: 730px;
+    }
+}
+
+.container-narrow > hr {
+    margin: 30px 0;
+}
+
+/* Supporting marketing content */
+.alert-success {
+    margin: 10px 0;
 }
 
 #loadingGif {
@@ -35,8 +57,29 @@
     display: none;
 }
 
-.result {
-    position: absolute;
-    left: 65%;
-    top: 30%;
+#Preview {
+    width: 650px;
+    height: 450px;
+    border-radius: 24px;
+    margin: 0 0 0 20px;
+}
+
+#imageButton {
+    display: none;
+}
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 768px) {
+    /* Remove the padding we set earlier */
+    .header,
+    .alert-success,
+    .footer {
+        padding-right: 0;
+        padding-left: 0;
+    }
+
+    /* Space out the masthead */
+    .header {
+        margin-bottom: 30px;
+    }
 }
