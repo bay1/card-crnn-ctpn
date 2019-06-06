@@ -61,12 +61,14 @@ def val(net, dataset, criterion, max_iter=100):
             preds_size = Variable(torch.IntTensor([preds.size(0)] * batch_size))
             cost = criterion(preds, text, preds_size, length) / batch_size
             loss_avg.add(cost)
+
             _, preds = preds.max(2)
+            preds = preds.squeeze(2)
             preds = preds.transpose(1, 0).contiguous().view(-1)
             sim_preds = converter.decode(preds.data, preds_size.data, raw=False)
             list_1 = []
             for i in cpu_texts:
-                list_1.append(i.decode('utf-8', 'strict'))
+                list_1.append(i)
             for pred, target in zip(sim_preds, list_1):
                 if pred == target:
                     n_correct += 1
@@ -91,6 +93,7 @@ def trainBatch(crnn, criterion, optimizer, train_iter):
     t, l = converter.encode(cpu_texts)
     utils.loadData(text, t)
     utils.loadData(length, l)
+
     preds = crnn(image)
     preds_size = Variable(torch.IntTensor([preds.size(0)] * batch_size))
     cost = criterion(preds, text, preds_size, length) / batch_size

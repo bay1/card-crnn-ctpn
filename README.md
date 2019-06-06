@@ -1,10 +1,8 @@
-https://github.com/Sierkinhane/crnn_chinese_characters_rec
+[crnn.pytorch](https://github.com/meijieru/crnn.pytorch)
 
-https://github.com/xiaofengShi/CHINESE-OCR
+[text-detection-ctpn](https://github.com/eragonruan/text-detection-ctpn)
 
-https://github.com/eragonruan/text-detection-ctpn
-
-https://github.com/chineseocr/chineseocr
+[why my accuracy is always 0?](https://github.com/meijieru/crnn.pytorch/issues/92)
 
 ## INSTALL
 
@@ -22,16 +20,11 @@ chmod +x make.sh
 ./make.sh
 ```
 
-test_image_folder: data/test_images
-
-ctpn_middel_result_folder: data/middle_result
-
-ctpn_result_folder: data/res # number_x.jpg or .jpeg
-
 ## crnn
 
 ```bash
 cd crnn
+
 python handle_images.py
 ```
 handle images floder: data/images/
@@ -49,9 +42,7 @@ python to_lmdb_py3.py # python to_lmdb_py2.py
 lmdb folder: crnn/train/lmdb
 
 ```bash
-cd crnn
-
-python crnn_main.py # train models
+python crnn/crnn_main.py --cuda # train crnn models
 
 ```
 trainroot folder: crnn/to_lmdb/lmdb
@@ -64,10 +55,6 @@ change params: crnn/params.py
 
 if you load_state_dict, change crnn/params.py crnn='your pth path'
 
-crnn model path: crnn/trained_models/crnn_Rec_done.pth
-
-images_path: data/res
-
 
 ## web
 
@@ -77,7 +64,16 @@ to run the web
 python run.py
 ```
 
-url: http://127.0.0.1:5000
+ctpn: download the ckpt file from https://github.com/eragonruan/text-detection-ctpn#demo
+
+crnn model path: crnn/trained_models/crnn_Rec_done.pth
+
+url-> http://127.0.0.1:5000
+
+## result
+
+>current crnn params and lmdb niter 60
+(complete distinguish one of the test_images, as follows)
 
 ![index](static/img/index.png)
 

@@ -19,7 +19,6 @@ def OCR_lmj(img_path, file, f):
     f.writelines(line)
 
     # 保存图片
-    imgry = imgry.resize((params.imgW, params.imgH))
     imgry.save('to_lmdb/train_images/' + new_file)
 
     return new_filename
