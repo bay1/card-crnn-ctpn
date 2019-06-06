@@ -16,20 +16,29 @@ from crnn.test import crnn_recognition
 app = Flask(__name__)
 app.debug = True
 
+def check_floder(floder):
+    """
+    check floder
+    """
+    if not os.path.exists(floder):
+        os.mkdir(floder)
 
 def handle_img(image):
     _img = image.encode().split(b';base64,')[-1]
     _img = base64.b64decode(_img)
     jobid = uuid.uuid1().__str__()
+    check_floder('data/test_images')
     path = 'data/test_images/{}.jpg'.format(jobid)
     with open(path, 'wb') as f:
         f.write(_img)
 
     timeTake = time.time()
     main()
+    check_floder('data/middle_result')
     middle_path = 'data/middle_result/{}.jpg'.format(jobid)
     result_image = open(middle_path, 'rb') # 轮廓识别结果
 
+    check_floder('data/res')
     res_image = 'data/res/{}.jpg'.format(jobid)
     try:
         # read image

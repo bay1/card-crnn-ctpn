@@ -149,9 +149,7 @@ def main():
                     if i == width_max_value[0] and width_max_value[1] > 20:
                         color = (255, 0, 0)
                         box[0] = box[0] - 5
-                        box[1] = box[1] - 5
                         box[2] = box[2] + 5
-                        box[5] = box[5] + 5
                         partImg = img[box[1]:box[5], box[0]:box[2]][:, :, 0]
 
                     cv2.polylines(img_copy, [box[:8].astype(np.int32).reshape((-1, 1, 2))], True, color=color,

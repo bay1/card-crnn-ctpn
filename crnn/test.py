@@ -23,7 +23,7 @@ parser.add_argument('--images_path', type=str, default='data/res/', help='the pa
 opt = parser.parse_args()
 
 # crnn params
-crnn_model_path = 'crnn/trained_models/crnn_Rec_done_1.pth'
+crnn_model_path = 'crnn/trained_models/crnn_Rec_done.pth'
 alphabet = str1
 nclass = len(alphabet) + 1
 
