@@ -1,6 +1,6 @@
-from __future__ import print_function
-import argparse
+import os
 import random
+
 import torch
 import torch.backends.cudnn as cudnn
 import torch.optim as optim
@@ -8,20 +8,11 @@ import torch.utils.data
 from torch.autograd import Variable
 import numpy as np
 from warpctc_pytorch import CTCLoss
-import os
+
 import utils
 import dataset
-import models.crnn as crnn
 import params
-
-
-def init_args():
-    args = argparse.ArgumentParser()
-    args.add_argument('--trainroot', help='path to dataset', default='crnn/to_lmdb/lmdb')
-    args.add_argument('--valroot', help='path to dataset', default='crnn/to_lmdb/lmdb')
-    args.add_argument('--cuda', action='store_true', help='enables cuda', default=False)
-
-    return args.parse_args()
+import models.crnn as crnn
 
 
 # custom weights initialization called on crnn
@@ -85,7 +76,7 @@ def val(net, dataset, criterion, max_iter=100):
         pass
 
 
-def trainBatch(crnn, criterion, optimizer, train_iter):
+def train_batch(crnn, criterion, optimizer, train_iter):
     data = train_iter.next()
     cpu_images, cpu_texts = data
     batch_size = cpu_images.size(0)
@@ -111,7 +102,7 @@ def training(crnn, train_loader, criterion, optimizer):
             for p in crnn.parameters():
                 p.requires_grad = True
             crnn.train()
-            cost = trainBatch(crnn, criterion, optimizer, train_iter)
+            cost = train_batch(crnn, criterion, optimizer, train_iter)
             loss_avg.add(cost)
             i += 1
             if i % params.displayInterval == 0:
@@ -125,7 +116,6 @@ def training(crnn, train_loader, criterion, optimizer):
 
 
 if __name__ == '__main__':
-    args = init_args()
     manualSeed = random.randint(1, 10000)  # fix seed
     random.seed(manualSeed)
     np.random.seed(manualSeed)
@@ -133,11 +123,11 @@ if __name__ == '__main__':
     cudnn.benchmark = True
 
     # store model path
-    if not os.path.exists('crnn/expr'):
-        os.mkdir('crnn/expr')
+    if not os.path.exists(params.experiment):
+        os.mkdir(params.experiment)
 
     # read train set
-    train_dataset = dataset.lmdbDataset(root=args.trainroot)
+    train_dataset = dataset.lmdbDataset(root=params.trainroot)
     assert train_dataset
     if not params.random_sample:
         sampler = dataset.randomSequentialSampler(train_dataset, params.batchSize)
@@ -152,7 +142,7 @@ if __name__ == '__main__':
 
     # read test set
     test_dataset = dataset.lmdbDataset(
-        root=args.valroot, transform=dataset.resizeNormalize((params.imgW, params.imgH)))
+        root=params.valroot, transform=dataset.resizeNormalize((params.imgW, params.imgH)))
 
     nclass = len(params.alphabet) + 1
     nc = 1
@@ -167,7 +157,7 @@ if __name__ == '__main__':
     length = torch.IntTensor(params.batchSize)
 
     crnn = crnn.CRNN(params.imgH, nc, nclass, params.nh)
-    if args.cuda:
+    if params.cuda:
         crnn.cuda()
         image = image.cuda()
         criterion = criterion.cuda()

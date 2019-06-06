@@ -23,9 +23,7 @@ chmod +x make.sh
 ## crnn
 
 ```bash
-cd crnn
-
-python handle_images.py
+python crnn/handle_images.py
 ```
 handle images floder: data/images/
 
@@ -34,15 +32,13 @@ image<->correct number folder: crnn/to_lmdb/train.txt
 handle images result folder: crnn/to_lmdb/train_images
 
 ```bash
-cd crnn/to_lmdb
-
-python to_lmdb_py3.py # python to_lmdb_py2.py 
+python crnn/to_lmdb/to_lmdb_py3.py # python crnn/to_lmdb/to_lmdb_py2.py 
 ```
 
 lmdb folder: crnn/train/lmdb
 
 ```bash
-python crnn/crnn_main.py --cuda # train crnn models
+python crnn/train.py # train crnn models
 
 ```
 trainroot folder: crnn/to_lmdb/lmdb
@@ -51,14 +47,16 @@ valroot folder: crnn/to_lmdb/lmdb
 
 train models result folder: crnn/expr
 
-change params: crnn/params.py
+## change params
 
-if you load_state_dict, change crnn/params.py crnn='your pth path'
+>if you change params
 
+- ctpn/params.py
+- crnn/params.py
 
 ## web
 
-to run the web
+run the web
 
 ```python
 python run.py
@@ -74,10 +72,6 @@ url-> http://127.0.0.1:5000
 
 >current crnn params and lmdb niter 60
 (complete distinguish one of the test_images, as follows)
-
-## result
-
-crnn: current params and lmdb niter 60(complete distinguish one of the test_images, as follows)
 
 ![index](static/img/index.png)
 

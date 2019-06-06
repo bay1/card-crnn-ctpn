@@ -31,7 +31,8 @@ def createDataset(outputPath, imagePathList, labelList, lexiconList=None, checkV
     cache = {}
     cnt = 1
     for i in range(nSamples):
-        imagePath = 'train_images/' + ''.join(imagePathList[i]).split()[0].replace('\n', '').replace('\r\n', '')
+        imagePath = 'crnn/to_lmdb/train_images/' + ''.join(imagePathList[i]).split()[0].replace('\n', '').replace(
+            '\r\n', '')
         print(imagePath)
         label = ''.join(labelList[i])
         print(label)
@@ -63,8 +64,8 @@ def createDataset(outputPath, imagePathList, labelList, lexiconList=None, checkV
 
 
 if __name__ == '__main__':
-    outputPath = "lmdb"
-    imgdata = open("train.txt")
+    outputPath = "crnn/to_lmdb/lmdb"
+    imgdata = open("crnn/to_lmdb/train.txt")
     imagePathList = list(imgdata)
 
     labelList = []

@@ -12,17 +12,17 @@ def init_args():
                       '--image_dir',
                       type=str,
                       help='The directory of the dataset , which contains the images',
-                      default='train_images')
+                      default='crnn/to_lmdb/train_images')
     args.add_argument('-l',
                       '--label_file',
                       type=str,
                       help='The file which contains the paths and the labels of the data set',
-                      default='train.txt')
+                      default='crnn/to_lmdb/train.txt')
     args.add_argument('-s',
                       '--save_dir',
                       type=str
                       , help='The generated mdb file save dir',
-                      default='lmdb')
+                      default='crnn/to_lmdb/lmdb')
     args.add_argument('-m',
                       '--map_size',
                       help='map size of lmdb',

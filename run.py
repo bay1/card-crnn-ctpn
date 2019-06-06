@@ -4,17 +4,18 @@ import time
 import uuid
 import base64
 
-from PIL import Image
 from flask import Flask
 from flask import jsonify
 from flask import request
 from flask import render_template
 
-from ctpn.demo import main
+import ctpn.params as ctpn_params
+from ctpn.test import ctpn_recognition
 from crnn.test import crnn_recognition
 
 app = Flask(__name__)
 app.debug = True
+
 
 def check_floder(floder):
     """
@@ -23,40 +24,35 @@ def check_floder(floder):
     if not os.path.exists(floder):
         os.mkdir(floder)
 
+
 def handle_img(image):
+    """
+    crnn + ctpn handle image
+    """
     _img = image.encode().split(b';base64,')[-1]
     _img = base64.b64decode(_img)
     jobid = uuid.uuid1().__str__()
     check_floder('data/test_images')
-    path = 'data/test_images/{}.jpg'.format(jobid)
-    with open(path, 'wb') as f:
+    test_images_path = 'data/test_images/{}.jpg'.format(jobid)
+    with open(test_images_path, 'wb') as f:
         f.write(_img)
 
     timeTake = time.time()
-    main()
-    check_floder('data/middle_result')
-    middle_path = 'data/middle_result/{}.jpg'.format(jobid)
-    result_image = open(middle_path, 'rb') # 轮廓识别结果
 
-    check_floder('data/res')
-    res_image = 'data/res/{}.jpg'.format(jobid)
-    try:
-        # read image
-        image = Image.open(res_image)
-    except:
-        print("Error reading image")
+    part_image = ctpn_recognition(test_images_path, app)
 
-    result = crnn_recognition(image)
+    middle_path = os.path.join(ctpn_params.middle_path + '{}.jpg'.format(jobid))
+    ctpn_result_image = open(middle_path, 'rb')
+
+    sim_pred = crnn_recognition(part_image, app)
 
     timeTake = time.time() - timeTake
 
-    os.remove(path)
-    os.remove(middle_path)
-    os.remove(res_image)
+    os.remove(test_images_path)
 
     return {
-        'text': result,
-        'result_image': base64.b64encode(result_image.read()).decode('utf-8'),
+        'text': sim_pred,
+        'result_image': base64.b64encode(ctpn_result_image.read()).decode('utf-8'),
         'timeTake': round(timeTake, 4)
     }
 
