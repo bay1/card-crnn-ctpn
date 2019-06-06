@@ -75,6 +75,10 @@ url-> http://127.0.0.1:5000
 >current crnn params and lmdb niter 60
 (complete distinguish one of the test_images, as follows)
 
+## result
+
+crnn: current params and lmdb niter 60(complete distinguish one of the test_images, as follows)
+
 ![index](static/img/index.png)
 
 ![uploading](static/img/uploading.png)
