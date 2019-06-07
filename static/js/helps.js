@@ -1,6 +1,6 @@
 function postImg() {
     //执行post请求，识别图片
-    if (imgJson['num'] == 0) {
+    if (imgJson['num'] === 0) {
         loadingGif('loadingGif');
         imgJson['num'] = 1; //防止重复提交
         jQuery.ajax({
@@ -12,8 +12,9 @@ function postImg() {
             success: function (res) {
                 loadingGif('loadingGif');
                 imgJson['num'] = 0; //防止重复提交
-                imgJson["result"] = res;
-                getChildDetail();
+                console.log(res);
+                jQuery("#Preview").attr('src', 'data:image/png;base64,' + res['result_image']);
+                showResult(res['text'], res['timeTake']);
             }
         });
     }
@@ -23,8 +24,8 @@ function postImg() {
 
 function loadingGif(loadingGif) {
     //加载请求时旋转动态图片
-    var imgId = document.getElementById(loadingGif);
-    if (imgId.style.display == "block") {
+    const imgId = document.getElementById(loadingGif);
+    if (imgId.style.display === "block") {
         imgId.style.display = "none";
     } else {
         imgId.style.display = "block";
@@ -74,13 +75,6 @@ function FunimgPreview(avatarSlect, avatarPreview) {
         };
 
     })
-}
-
-function getChildDetail() {
-    result = imgJson["result"];
-    console.log(result);
-    jQuery("#Preview").attr('src', 'data:image/png;base64,' + result['result_image']);
-    showResult(result['text'], result['timeTake']);
 }
 
 //show数据

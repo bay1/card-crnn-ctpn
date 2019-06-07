@@ -2,7 +2,7 @@
 
 [text-detection-ctpn](https://github.com/eragonruan/text-detection-ctpn)
 
-[why my accuracy is always 0?](https://github.com/meijieru/crnn.pytorch/issues/92)
+[why my accuracy is always 0](https://github.com/meijieru/crnn.pytorch/issues/92)
 
 ## INSTALL
 
@@ -27,7 +27,9 @@ python crnn/handle_images.py
 ```
 handle images floder: data/images/
 
-image<->correct number folder: crnn/to_lmdb/train.txt
+image, correct number folder: crnn/to_lmdb/train.txt
+
+![traintxt](static/img/traintxt.png)
 
 handle images result folder: crnn/to_lmdb/train_images
 
@@ -66,7 +68,7 @@ ctpn: download the ckpt file from https://github.com/eragonruan/text-detection-c
 
 crnn model path: crnn/trained_models/crnn_Rec_done.pth
 
-url-> http://127.0.0.1:5000
+http://127.0.0.1:5000
 
 ## result
 
