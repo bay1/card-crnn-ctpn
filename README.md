@@ -1,16 +1,8 @@
-[crnn.pytorch](https://github.com/meijieru/crnn.pytorch)
-
-[text-detection-ctpn](https://github.com/eragonruan/text-detection-ctpn)
-
-[why my accuracy is always 0](https://github.com/meijieru/crnn.pytorch/issues/92)
+[More details](https://www.cnblogs.com/bay1/p/10994600.html)
 
 ## INSTALL
 
 Ubuntu18/16.04 + CUDA 8.0.61 + GeForce GTX 960M + NVIDIA Driver 430.14 + Python3.6 + Tensorflow-gpu
-
-
-- torchvision==0.2.2.post3 install after torch done
-- install warpctc-pytorch==0.1 by https://github.com/SeanNaren/warp-ctc
 
 ## ctpn
 
@@ -80,3 +72,11 @@ http://127.0.0.1:5000
 ![uploading](static/img/uploading.png)
 
 ![result](static/img/result.png)
+
+## reference
+
+[crnn.pytorch](https://github.com/meijieru/crnn.pytorch)
+
+[text-detection-ctpn](https://github.com/eragonruan/text-detection-ctpn)
+
+[why my accuracy is always 0](https://github.com/meijieru/crnn.pytorch/issues/92)
