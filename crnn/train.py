@@ -25,14 +25,18 @@ def weights_init(m):
         m.bias.data.fill_(0)
 
 
-def val(net, dataset, criterion, max_iter=100):
+def val(net, criterion, max_iter=100):
     print('Start val')
+    # read test set
+    test_dataset = dataset.lmdbDataset(
+        root=params.valroot, transform=dataset.resizeNormalize((params.imgW, params.imgH)))
+
     for p in crnn.parameters():
         p.requires_grad = False
     net.eval()
     try:
         data_loader = torch.utils.data.DataLoader(
-            dataset, shuffle=True, batch_size=params.batchSize, num_workers=int(params.workers))
+            test_dataset, shuffle=True, batch_size=params.batchSize, num_workers=int(params.workers))
         val_iter = iter(data_loader)
         i = 0
         n_correct = 0
@@ -59,7 +63,7 @@ def val(net, dataset, criterion, max_iter=100):
             sim_preds = converter.decode(preds.data, preds_size.data, raw=False)
             list_1 = []
             for i in cpu_texts:
-                list_1.append(i)
+                list_1.append(i.decode('utf-8','strict'))
             for pred, target in zip(sim_preds, list_1):
                 if pred == target:
                     n_correct += 1
@@ -68,8 +72,8 @@ def val(net, dataset, criterion, max_iter=100):
         for raw_pred, pred, gt in zip(raw_preds, sim_preds, list_1):
             print('%-20s => %-20s, gt: %-20s' % (raw_pred, pred, gt))
 
-        print(n_correct)
-        print(max_iter * params.batchSize)
+        # print(n_correct)
+        # print(max_iter * params.batchSize)
         accuracy = n_correct / float(max_iter * params.batchSize)
         print('Test loss: %f, accuray: %f' % (loss_avg.val(), accuracy))
     except:
@@ -110,7 +114,7 @@ def training(crnn, train_loader, criterion, optimizer):
                       (total_steps, params.niter, i, len(train_loader), loss_avg.val()))
                 loss_avg.reset()
             if i % params.valInterval == 0:
-                val(crnn, test_dataset, criterion)
+                val(crnn, criterion)
         if (total_steps + 1) % params.saveInterval == 0:
             torch.save(crnn.state_dict(), '{0}/crnn_Rec_done_{1}_{2}.pth'.format(params.experiment, total_steps, i))
 
@@ -139,10 +143,6 @@ if __name__ == '__main__':
         shuffle=True, sampler=sampler,
         num_workers=int(params.workers),
         collate_fn=dataset.alignCollate(imgH=params.imgH, imgW=params.imgW, keep_ratio=params.keep_ratio))
-
-    # read test set
-    test_dataset = dataset.lmdbDataset(
-        root=params.valroot, transform=dataset.resizeNormalize((params.imgW, params.imgH)))
 
     nclass = len(params.alphabet) + 1
     nc = 1

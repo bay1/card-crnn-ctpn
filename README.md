@@ -1,4 +1,4 @@
-[获取更多的细节](https://www.cnblogs.com/bay1/p/10994600.html)
+[More details](https://www.cnblogs.com/bay1/p/10994600.html)
 
 ## INSTALL
 
