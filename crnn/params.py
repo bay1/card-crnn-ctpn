@@ -3,8 +3,8 @@ random_sample = True
 keep_ratio = True
 adam = False
 adadelta = False
-saveInterval = 6
-valInterval = 6
+saveInterval = 30
+valInterval = 30
 n_test_disp = 5
 displayInterval = 3
 experiment = 'crnn/expr'
@@ -30,7 +30,16 @@ crnn_model_path = 'crnn/trained_models/crnn_Rec_done.pth'
 # handle_images.py params start #
 train_images = 'crnn/to_lmdb/train_images/'
 test_images = 'crnn/to_lmdb/test_images/'
-original_dir = 'data/images/'  # 图片存放目录figures
 train_images_labels = "crnn/to_lmdb/train.txt"
 test_images_labels = "crnn/to_lmdb/test.txt"
+origin_train_num = 900
+augmentation_train_num = 7000
+original_dir = 'data/images/'  # 图片存放目录figures
+augmentation_dir = 'data/generating'  # 图片存放目录figures
 # handle_images.py params end #
+
+
+# augmentation.py params start #
+augmentation_original_dir = 'data/images'
+augmentation_output = 'data/generating'
+# augmentation.py params end #

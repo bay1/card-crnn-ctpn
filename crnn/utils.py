@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # encoding: utf-8
-
+import os
+import shutil
 import torch
 import torch.nn as nn
 from torch.autograd import Variable
@@ -46,11 +47,11 @@ class strLabelConverter(object):
         # for t in text:
         #     list_1 = []
         #     list_1.append(t[2:-1])
-        # for item in list_1:            
+        # for item in list_1:
         #     length.append(len(item))
         #     for char in item:
         #         char = char.casefold()
-        #         index = self.dict[char]                
+        #         index = self.dict[char]
         #         result.append(index)
         # text = result
         # print(list_1)
@@ -92,8 +93,8 @@ class strLabelConverter(object):
                 # else:
                 #     result.append(index)
                 # finally:
-                #     #print(index)             
-                #     #result.append(index)    
+                #     #print(index)
+                #     #result.append(index)
                 #     pass
                 index = self.dict[char]
                 result.append(index)
@@ -201,3 +202,16 @@ def assureRatio(img):
         main = nn.UpsamplingBilinear2d(size=(h, h), scale_factor=None)
         img = main(img)
     return img
+
+
+def check_floder_exist(floder_path):
+    exists = os.path.exists(floder_path)
+    if exists:
+        shutil.rmtree(floder_path)
+    os.mkdir(floder_path)
+
+
+def check_file_exist(file_path):
+    exists = os.path.isfile(file_path)
+    if exists:
+        os.remove(file_path)

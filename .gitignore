@@ -111,4 +111,8 @@ train/save_model/
 crnn/trained_models/
 ctpn/data/*.ckpt
 .idea/
+data/generating
+crnn/to_lmdb/test_images
+crnn/to_lmdb/train_images
 *.so
+*.mdb

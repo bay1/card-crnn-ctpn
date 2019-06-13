@@ -53,22 +53,25 @@ def val(net, criterion, max_iter=100):
             utils.loadData(text, t)
             utils.loadData(length, l)
             preds = crnn(image)
-            preds_size = Variable(torch.IntTensor([preds.size(0)] * batch_size))
+            preds_size = Variable(torch.IntTensor(
+                [preds.size(0)] * batch_size))
             cost = criterion(preds, text, preds_size, length) / batch_size
             loss_avg.add(cost)
 
             _, preds = preds.max(2)
             # preds = preds.squeeze(2)
             preds = preds.transpose(1, 0).contiguous().view(-1)
-            sim_preds = converter.decode(preds.data, preds_size.data, raw=False)
+            sim_preds = converter.decode(
+                preds.data, preds_size.data, raw=False)
             list_1 = []
             for i in cpu_texts:
-                list_1.append(i.decode('utf-8','strict'))
+                list_1.append(i.decode('utf-8', 'strict'))
             for pred, target in zip(sim_preds, list_1):
                 if pred == target:
                     n_correct += 1
 
-        raw_preds = converter.decode(preds.data, preds_size.data, raw=True)[:params.n_test_disp]
+        raw_preds = converter.decode(preds.data, preds_size.data, raw=True)[
+            :params.n_test_disp]
         for raw_pred, pred, gt in zip(raw_preds, sim_preds, list_1):
             print('%-20s => %-20s, gt: %-20s' % (raw_pred, pred, gt))
 
@@ -115,8 +118,11 @@ def training(crnn, train_loader, criterion, optimizer):
                 loss_avg.reset()
             if i % params.valInterval == 0:
                 val(crnn, criterion)
-        if (total_steps + 1) % params.saveInterval == 0:
-            torch.save(crnn.state_dict(), '{0}/crnn_Rec_done_{1}_{2}.pth'.format(params.experiment, total_steps, i))
+        if total_steps % params.saveInterval == 0:
+            save_name = '{0}/crnn_Rec_done_{1}_{2}.pth'.format(
+                params.experiment, total_steps, i)
+            torch.save(crnn.state_dict(), save_name)
+            print('%s saved' % save_name)
 
 
 if __name__ == '__main__':
@@ -134,7 +140,8 @@ if __name__ == '__main__':
     train_dataset = dataset.lmdbDataset(root=params.trainroot)
     assert train_dataset
     if not params.random_sample:
-        sampler = dataset.randomSequentialSampler(train_dataset, params.batchSize)
+        sampler = dataset.randomSequentialSampler(
+            train_dataset, params.batchSize)
     else:
         sampler = None
 
@@ -166,11 +173,12 @@ if __name__ == '__main__':
     if params.crnn != '':
         print('loading pretrained model from %s' % params.crnn)
 
-        preWeightDict = torch.load(params.crnn, map_location=lambda storage, loc: storage)  ##加入项目训练的权重
+        preWeightDict = torch.load(
+            params.crnn, map_location=lambda storage, loc: storage)  # 加入项目训练的权重
         modelWeightDict = crnn.state_dict()
         for k, v in preWeightDict.items():
             name = k.replace('module.', '')  # remove `module.`
-            if 'rnn.1.embedding' not in name:  ##不加载最后一层权重
+            if 'rnn.1.embedding' not in name:  # 不加载最后一层权重
                 modelWeightDict[name] = v
 
         crnn.load_state_dict(modelWeightDict)

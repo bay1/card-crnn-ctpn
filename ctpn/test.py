@@ -123,6 +123,8 @@ def ctpn_recognition(test_images_path, app):
                 img_copy, None, None, fx=1.0 / rh, fy=1.0 / rw, interpolation=cv2.INTER_LINEAR)
             cv2.imwrite(os.path.join(params.middle_path,
                                      os.path.basename(test_images_path)), img_copy[:, :, ::-1])
+            # cv2.imwrite(os.path.join('data/',
+            #                              os.path.basename(test_images_path)), part_img)
 
             part_img = Image.fromarray(part_img.astype('uint8'))
 

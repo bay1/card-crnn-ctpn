@@ -72,7 +72,7 @@ def createDataset(outputPath, imagePathList, labelList, map_size, lexiconList=No
     env = lmdb.open(outputPath, map_size=map_size)
 
     cache = {}
-    cnt = 0
+    cnt = 1
     for i in range(nSamples):
         imagePath = imagePathList[i].replace('\n', '').replace('\r\n', '')
         label = labelList[i]
