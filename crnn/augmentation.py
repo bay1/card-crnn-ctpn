@@ -15,7 +15,7 @@ import utils
 
 
 def add_noise(img):
-    for i in range(20):  # 添加点噪声
+    for i in range(20):
         temp_x = np.random.randint(0, img.shape[0])
         temp_y = np.random.randint(0, img.shape[1])
         img[temp_x][temp_y] = 255
@@ -74,5 +74,5 @@ for file in os.listdir(params.augmentation_original_dir):
 
         for image in imageGen:
             total += 1
-            if total == 10:
+            if total == params.total_num:
                 break
