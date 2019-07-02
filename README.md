@@ -1,4 +1,4 @@
-环境配置问题参考[More details](https://www.cnblogs.com/bay1/p/10994600.html)
+更多问题参考[More details](https://www.cnblogs.com/bay1/p/10994600.html)
 
 # HOW TO USE
 
@@ -34,8 +34,6 @@ cd ../pytorch_binding
 python setup.py install
 ```
 
-环境配置问题参考[More details](https://www.cnblogs.com/bay1/p/10994600.html)
-
 ## Run demo
 
 下载训练完成的模型，保存到路径crnn/trained_models/
@@ -59,6 +57,7 @@ ctpn使用了[text-detection-ctpn](https://github.com/eragonruan/text-detection-
 字符区域识别需要大量的训练数据，出于训练数据的缺失和自己训练模型性能较低的考虑，本项目使用已经通过了大量数据训练过的模型来识别文字区域，通过对文字区域宽高比的计算获取银行卡号的正确区域，从而进入下一步识别。
 
 本项目重点训练了crnn文字识别模型
+下载本地训练结果：https://pan.baidu.com/s/1TXuewaVgGzXjT0EPCj47Bg 提取码: 7we3
 
 ### 训练数据
 
