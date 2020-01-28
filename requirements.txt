@@ -16,7 +16,7 @@ Pillow==6.0.0
 protobuf==3.8.0
 pycparser==2.19
 six==1.12.0
-tensorflow-gpu==1.4.0
+tensorflow-gpu==1.15.2
 tensorflow-tensorboard==0.4.0
 torch==0.4.1
 torchvision==0.2.2.post3
